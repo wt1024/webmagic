@@ -6,6 +6,7 @@ import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.pipeline.FilePipeline;
 import us.codecraft.webmagic.pipeline.MysqlWtblogPipeline;
+import us.codecraft.webmagic.pipeline.util.StringUtil;
 import us.codecraft.webmagic.processor.PageProcessor;
 
 import java.util.List;
@@ -22,15 +23,19 @@ public class OschinaBlogPageProcessor implements PageProcessor {
     	//
     	//*****************************************
         //List<String> links = page.getHtml().links().regex("http://my\\.oschina\\.net/wangt10/blog/\\d+").all();
-    	List<String> links = page.getHtml().links().regex("http://my.oschina.net/airship/blog/\\d+").all();
+    	List<String> links = page.getHtml().links().regex("http://my.oschina.net/yangbajing/blog/\\d+").all();
         page.addTargetRequests(links);
         page.putField("title", page.getHtml().xpath("//div[@class='container']/div[@class='blog-content']/div[@class='blog-heading']/div[@class='title']/text()").toString());
         page.putField("content", page.getHtml().xpath("//div[@class='container']/div[@class='blog-content']/div[@class='blog-body']/div[@class='BlogContent']/html()").toString());
+        //page.putField("content", page.getHtml().xpath("//div[@class='container']/div[@class='blog-content']/div[@class='blog-body']/html()").toString());
         
         page.putField("img_links", page.getHtml().xpath("//div[@class='container']/div[@class='blog-content']/div[@class='blog-body']/div[@class='BlogContent']//img/@src").all());
         
-        if (page.getResultItems().get("title") == null) {
+        if (page.getResultItems().get("title") == null
+        		|| page.getResultItems().get("content") == null || "".equals(page.getResultItems().get("content") == null)
+        		) {
             //skip this page
+        	System.out.println("skip: "+page.getResultItems().get("title"));
             page.setSkip(true);
         }
     }
@@ -43,11 +48,16 @@ public class OschinaBlogPageProcessor implements PageProcessor {
 
     public static void main(String[] args) {
     	//*********************
-        Spider.create(new OschinaBlogPageProcessor())
-        .addUrl("http://my.oschina.net/airship/blog?sort=time&p=1")
-        .addUrl("http://my.oschina.net/airship/blog?sort=time&p=2")
-        //.addUrl("http://my.oschina.net/codeismygirl/blog?sort=time&p=2","http://my.oschina.net/codeismygirl/blog?sort=time&p=3")
-        .addPipeline(new ConsolePipeline()).addPipeline(new MysqlWtblogPipeline())
+        
+        
+    	Spider s = Spider.create(new CSDNBlogPageProcessor());
+    	
+    	for(int i=40;i>=1;i--){
+    		s.addUrl("http://blog.csdn.net/testcs_dn/article/list/"+i);
+    	}
+        //.addUrl("http://blog.csdn.net/yerenyuan_pku/article/list/2","http://blog.csdn.net/yerenyuan_pku/article/list/1")
+        
+        s.addPipeline(new ConsolePipeline()).addPipeline(new MysqlWtblogPipeline())
         .run();
     }
 }

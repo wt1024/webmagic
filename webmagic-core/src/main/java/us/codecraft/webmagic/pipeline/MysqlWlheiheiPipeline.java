@@ -134,6 +134,7 @@ public class MysqlWlheiheiPipeline  implements Pipeline {
 	  Matcher   m   =   p.matcher(str);     
 	  String temp =  m.replaceAll("").trim();
 	  temp = temp.replaceAll(" ", "");
+	  temp=temp.replaceAll("---","m");//  ---  会导致404
 	  String result = "";
 	  try {
 		  result =  URLEncoder.encode(temp, "utf-8");
