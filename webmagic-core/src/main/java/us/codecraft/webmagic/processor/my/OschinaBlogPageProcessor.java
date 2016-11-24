@@ -23,16 +23,20 @@ public class OschinaBlogPageProcessor implements PageProcessor {
     	//
     	//*****************************************
         //List<String> links = page.getHtml().links().regex("http://my\\.oschina\\.net/wangt10/blog/\\d+").all();
-    	List<String> links = page.getHtml().links().regex("http://my.oschina.net/yangbajing/blog/\\d+").all();
+    	List<String> links = page.getHtml().links().regex("https://my.oschina.net/JoeyZ/blog/\\d+").all();
         page.addTargetRequests(links);
-        page.putField("title", page.getHtml().xpath("//div[@class='container']/div[@class='blog-content']/div[@class='blog-heading']/div[@class='title']/text()").toString());
-        page.putField("content", page.getHtml().xpath("//div[@class='container']/div[@class='blog-content']/div[@class='blog-body']/div[@class='BlogContent']/html()").toString());
-        //page.putField("content", page.getHtml().xpath("//div[@class='container']/div[@class='blog-content']/div[@class='blog-body']/html()").toString());
+        System.out.println(links.size());
+        //   /html/body/div[1]/div[1]/div/div[4]/div[1]/div[1]/span
+        page.putField("title", page.getHtml().xpath("//div[@class='title']/text()").toString());
         
-        page.putField("img_links", page.getHtml().xpath("//div[@class='container']/div[@class='blog-content']/div[@class='blog-body']/div[@class='BlogContent']//img/@src").all());
+      //*[@id="blogBody"]/div
+        page.putField("content", page.getHtml().xpath("//div[@id='blogBody']/div[@class='BlogContent']/html()").toString());
         
-        if (page.getResultItems().get("title") == null
-        		|| page.getResultItems().get("content") == null || "".equals(page.getResultItems().get("content") == null)
+        page.putField("img_links", page.getHtml().xpath("//div[@id='blogBody']/div[@class='BlogContent']//img/@src").all());
+        
+        
+        if (page.getResultItems().get("title") == null || "".equals(page.getResultItems().get("title") )
+        		|| page.getResultItems().get("content") == null || "".equals(page.getResultItems().get("content") )
         		) {
             //skip this page
         	System.out.println("skip: "+page.getResultItems().get("title"));
@@ -48,14 +52,21 @@ public class OschinaBlogPageProcessor implements PageProcessor {
 
     public static void main(String[] args) {
     	//*********************
-        
-        
-    	Spider s = Spider.create(new CSDNBlogPageProcessor());
+//    	Spider.create(new OschinaBlogPageProcessor())
+//        .addUrl("http://my.oschina.net/JoeyZ/blog?sort=time&p=1")
+//        .addUrl("http://my.oschina.net/JoeyZ/blog?sort=time&p=2")
+//
+//        .addPipeline(new ConsolePipeline()).addPipeline(new MysqlWtblogPipeline())
+//        .run();
     	
-    	for(int i=40;i>=1;i--){
-    		s.addUrl("http://blog.csdn.net/testcs_dn/article/list/"+i);
+    	
+        
+    	Spider s = Spider.create(new OschinaBlogPageProcessor());
+    	
+    	for(int i=6;i>=1;i--){
+    		
+    		s.addUrl("http://my.oschina.net/JoeyZ/blog?sort=time&p="+i);
     	}
-        //.addUrl("http://blog.csdn.net/yerenyuan_pku/article/list/2","http://blog.csdn.net/yerenyuan_pku/article/list/1")
         
         s.addPipeline(new ConsolePipeline()).addPipeline(new MysqlWtblogPipeline())
         .run();
