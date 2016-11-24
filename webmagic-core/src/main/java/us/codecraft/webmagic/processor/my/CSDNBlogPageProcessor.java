@@ -22,7 +22,7 @@ public class CSDNBlogPageProcessor implements PageProcessor {
     public void process(Page page) {
     	//
     	//*****************************************
-    	List<String> links = page.getHtml().links().regex("http://blog.csdn.net/ochangwen/article/details/\\d+").all();
+    	List<String> links = page.getHtml().links().regex("http://blog.csdn.net/Peng_Hong_fu/article/details/\\d+").all();
         page.addTargetRequests(links);
         
         page.putField("title", page.getHtml().xpath("//div[@id='container']/div[@id='body']/div[@id='main']/div[@class='main']//div[@class='article_title']//span[@class='link_title']/a/text()").toString());
@@ -43,8 +43,8 @@ public class CSDNBlogPageProcessor implements PageProcessor {
         
         
         
-        if (page.getResultItems().get("title") == null
-        		|| 	page.getResultItems().get("content") == null|| "".equals(page.getResultItems().get("content") == null)
+        if (page.getResultItems().get("title") == null || "".equals(page.getResultItems().get("title"))
+        		|| 	page.getResultItems().get("content") == null|| "".equals(page.getResultItems().get("content"))
         		) {
             //skip this page
         	System.out.println("skip``````");
@@ -62,14 +62,15 @@ public class CSDNBlogPageProcessor implements PageProcessor {
     	//***csdn有目录视图(显示文章数量多) 和 摘要视图(显示文章数少), 默认是摘要视图
     	Spider s = Spider.create(new CSDNBlogPageProcessor());
     	
-    	for(int i=12   ; i>=1;i--){
-    		s.addUrl("http://blog.csdn.net/ochangwen/article/list/"+i);
+    	for(int i=5   ; i>=1;i--){
+    		s.addUrl("http://blog.csdn.net/Peng_Hong_fu/article/list/"+i);
     	}
         //s.addUrl("http://blog.csdn.net/ljcitworld?viewmode=list");
         
         s.addPipeline(new ConsolePipeline()).addPipeline(new MysqlWtblogPipeline())
         .run();
     }
+    //Peng_Hong_fu
     //ochangwen
     //reliveit
     //ochangwen
