@@ -14,7 +14,7 @@ public class Test {
         }
     }
 	public static void main(String[] args) {
-		//1
+		//12
 		String t = "<p><span style=\"font-size:14px\">转载请注明出处： 转载自&nbsp; Thinkgamer的CSDN博客：blog.csdn.net/gamer_gyt</span></p> ";
 		System.out.println(t.replaceFirst("请注明出处： 转载自&nbsp; Thinkgamer的CSDN博客：blog.csdn.net", "a"));
 		System.out.println(t);
