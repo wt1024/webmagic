@@ -21,8 +21,8 @@ public class CSDNBlogPageProcessor implements PageProcessor {
     @Override
     public void process(Page page) {
     	//
-    	//*****************************************
-    	List<String> links = page.getHtml().links().regex("http://blog.csdn.net/Peng_Hong_fu/article/details/\\d+").all();
+    	//*****************************************todo
+    	List<String> links = page.getHtml().links().regex("http://blog.csdn.net/future_challenger/article/details/\\d+").all();
         page.addTargetRequests(links);
         
         page.putField("title", page.getHtml().xpath("//div[@id='container']/div[@id='body']/div[@id='main']/div[@class='main']//div[@class='article_title']//span[@class='link_title']/a/text()").toString());
@@ -61,14 +61,17 @@ public class CSDNBlogPageProcessor implements PageProcessor {
     public static void main(String[] args) {
     	//***csdn有目录视图(显示文章数量多) 和 摘要视图(显示文章数少), 默认是摘要视图
     	Spider s = Spider.create(new CSDNBlogPageProcessor());
-    	
-    	for(int i=5   ; i>=1;i--){
-    		s.addUrl("http://blog.csdn.net/Peng_Hong_fu/article/list/"+i);
+    	//todo
+    	for(int i=1   ; i>=1;i--){
+
+    		s.addUrl("http://blog.csdn.net/future_challenger/article/list/"+i);
     	}
         //s.addUrl("http://blog.csdn.net/ljcitworld?viewmode=list");
         
         s.addPipeline(new ConsolePipeline()).addPipeline(new MysqlWtblogPipeline())
         .run();
+
+        System.out.println("success");
     }
     //Peng_Hong_fu
     //ochangwen
@@ -90,4 +93,5 @@ public class CSDNBlogPageProcessor implements PageProcessor {
     //u011240877
     //jiangshouzhuang
     //qq_26525215
+    //future_challenger
 }

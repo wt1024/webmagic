@@ -66,7 +66,7 @@ public class MysqlWlheiheiPipeline  implements Pipeline {
     		String last_ = tempstr[tempstr.length-1];//图片结尾 .jpg .gif 
     		String new_img_name=System.currentTimeMillis()+"_"+flint+"."+last_;
     		try {
-				DownloadImage.download(s, new_img_name, "d:/spider2/"+datestr);
+				DownloadImage.download(s, new_img_name, "/Users/wangt/wtdata0/temp/spider2/"+datestr);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
