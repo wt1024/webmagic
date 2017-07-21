@@ -121,6 +121,7 @@ public class MysqlWtblogPipeline extends FilePersistentBase implements Pipeline 
     		String new_img_name=System.currentTimeMillis()+"_"+flint+"."+last_;
     		try {
     			System.out.println("downloadpic: "+s);
+
 				DownloadImage.download(s, new_img_name, "/Users/wangt/wtdata0/temp/spider/"+datestr);
 			} catch (Exception e) {
 				e.printStackTrace();

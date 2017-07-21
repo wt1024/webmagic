@@ -64,6 +64,8 @@ public class OschinaBlogPageProcessor implements PageProcessor {
     }
 
     public static void main(String[] args) {
+
+
     	//*********************
 //    	Spider.create(new OschinaBlogPageProcessor())
 //        .addUrl("http://my.oschina.net/JoeyZ/blog?sort=time&p=1")
@@ -78,12 +80,11 @@ public class OschinaBlogPageProcessor implements PageProcessor {
     	
     	for(int i=4;i>=1;i--){
 
-    		s.addUrl("https://my.oschina.net/jxcdwangtao/blog?sort=time&p="+i);
+    		//s.addUrl("https://my.oschina.net/jxcdwangtao/blog?sort=time&p="+i);
     	}
-        //s.addUrl("https://my.oschina.net/LinBigR/blog?sort=time");
-        s.addPipeline(new ConsolePipeline()).addPipeline(new MysqlWtblogPipeline())
-        .run();
-        //s.addPipeline(new ConsolePipeline()).run();
+        s.addUrl("https://my.oschina.net/jxcdwangtao/blog/841937");
+        //s.addPipeline(new ConsolePipeline()).addPipeline(new MysqlWtblogPipeline()).run();
+        s.addPipeline(new ConsolePipeline()).run();
 
         System.out.println("success");
 

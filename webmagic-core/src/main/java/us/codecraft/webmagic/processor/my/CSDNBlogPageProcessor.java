@@ -22,7 +22,7 @@ public class CSDNBlogPageProcessor implements PageProcessor {
     public void process(Page page) {
     	//
     	//*****************************************todo
-    	List<String> links = page.getHtml().links().regex("http://blog.csdn.net/future_challenger/article/details/\\d+").all();
+    	List<String> links = page.getHtml().links().regex("http://blog.csdn.net/zolalad/article/details/\\d+").all();
         page.addTargetRequests(links);
         
         page.putField("title", page.getHtml().xpath("//div[@id='container']/div[@id='body']/div[@id='main']/div[@class='main']//div[@class='article_title']//span[@class='link_title']/a/text()").toString());
@@ -62,17 +62,21 @@ public class CSDNBlogPageProcessor implements PageProcessor {
     	//***csdn有目录视图(显示文章数量多) 和 摘要视图(显示文章数少), 默认是摘要视图
     	Spider s = Spider.create(new CSDNBlogPageProcessor());
     	//todo
-    	for(int i=1   ; i>=1;i--){
+    	for(int i=8   ; i>=1;i--){
 
-    		s.addUrl("http://blog.csdn.net/future_challenger/article/list/"+i);
+    		s.addUrl("http://blog.csdn.net/zolalad/article/list/"+i);
     	}
+    	//s.addUrl("http://blog.csdn.net/zolalad/article/details/11593153");
         //s.addUrl("http://blog.csdn.net/ljcitworld?viewmode=list");
         
-        s.addPipeline(new ConsolePipeline()).addPipeline(new MysqlWtblogPipeline())
+        s.addPipeline(new ConsolePipeline())
+                .addPipeline(new MysqlWtblogPipeline())
         .run();
 
         System.out.println("success");
     }
+    //zolalad
+    //qq_37267015
     //Peng_Hong_fu
     //ochangwen
     //reliveit
