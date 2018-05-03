@@ -14,10 +14,10 @@ public class DBDataSourceWlheihei {
 	private static Object lock = new Object();
 	
 	private DBDataSourceWlheihei () {
-		URL = "jdbc:mysql://139.129.48.66:3306/wlheihei?useUnicode=true&characterEncoding=utf-8";
+		URL = "jdbc:mysql://121.42.33.175:3306/fs12307?useUnicode=true&characterEncoding=utf-8";
 		DRIVER = "com.mysql.jdbc.Driver";
 		USERNAME = "root";
-		PASSWORD = "wt123caibudaookm";
+		PASSWORD = "wt12120211314";
 	}
 	
 	public static DBDataSourceWlheihei getInstance() {
